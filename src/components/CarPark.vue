@@ -7,7 +7,7 @@
       <table class="styled-table">
         <thead>
           <tr>
-            <th>
+            <th class="styled-categories">
               {{ $t("message.categories") }}
             </th>
             <th>{{ $t("message.highest_availability_lots") }}</th>
@@ -20,8 +20,8 @@
             v-for="[key, value] in carparkAvailability"
             class="active-row"
           >
-            <td>{{ $t("message." + key) }}</td>
-            <td :key="k" v-for="[k, v] in value">
+            <td class="styled-categories">{{ $t("message." + key) }}</td>
+            <td :key="k" v-for="[k, v] in value" style="text-align: center">
               <ParkInfo :info="v" />
             </td>
           </tr>
@@ -70,7 +70,8 @@ export default {
   text-align: center;
 }
 
-td {
-  text-align: center;
+.styled-categories {
+  text-align: left;
+  padding-left: 24px;
 }
 </style>

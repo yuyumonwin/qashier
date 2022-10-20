@@ -3,8 +3,8 @@
   <div v-show="!isLoading">
     <CarPark :carparkAvailability="carparkAvailability" />
   </div>
-  <div v-if="isError" class="message">
-    {{ $t("message.error_message") }} {{ this.lastUpdated }}
+  <div v-if="!isLoading" class="message">
+    {{ $t("message.last_updated") }} {{ this.lastUpdated }}
   </div>
 </template>
 
@@ -18,8 +18,10 @@ export default {
   },
   data() {
     return {
-      lastUpdated: "",
-      isError: false,
+      lastUpdated: new Date().toLocaleDateString("en-SG", {
+        timeZone: "Asia/Singapore",
+        hour12: true,
+      }),
       isLoading: true,
       carparkAvailability: new Map(),
     };
@@ -75,15 +77,16 @@ export default {
                 this.carparkAvailability.set(key, availableByCategory);
 
                 this.isLoading = false;
-                this.isError = false;
+                this.lastUpdated = new Date().toLocaleString("en-SG", {
+                  timeZone: "Asia/Singapore",
+                  hour12: true,
+                });
               }
             });
           });
         })
-        .catch(() => {
-          this.isError = true;
-
-          this.lastUpdated = new Date().toString();
+        .catch((err) => {
+          console.log(err.toString())
         });
     },
   },

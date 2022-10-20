@@ -1,6 +1,5 @@
 <template>
-  {{ info.availableLot }}
-
+  <div class="displayNumber">{{ info.availableLot }} &nbsp;</div>
   <div class="tooltip">
     <i class="fa fa-info-circle"></i>
     <span class="tooltip-text">
@@ -20,6 +19,12 @@ export default {
 </script>
 
 <style scope>
+.displayNumber {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
