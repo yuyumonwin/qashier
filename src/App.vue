@@ -3,7 +3,9 @@
   <div v-show="!isLoading">
     <CarPark :carparkAvailability="carparkAvailability" />
   </div>
-  <div v-if="isError" class="message">{{ $t("message.error_message") }} {{this.lastUpdated}}</div>
+  <div v-if="isError" class="message">
+    {{ $t("message.error_message") }} {{ this.lastUpdated }}
+  </div>
 </template>
 
 <script>
@@ -81,7 +83,7 @@ export default {
         .catch(() => {
           this.isError = true;
 
-                this.lastUpdated = (new Date()).toString();
+          this.lastUpdated = new Date().toString();
         });
     },
   },
