@@ -1,20 +1,18 @@
 <template>
-    <div v-for="info in infoList">
-        <!-- <Task @toggle-reminder="$emit('toggle-reminder', task.id)" @delete-task="$emit('delete-task', task.id)" :task="task"/> -->
-        <ParkInfo/>
+    <div v-for="[key, value] in infoList">
+        <ParkInfo :info="value"/>
     </div>
 </template>
 
 <script>
-import ParkInfo from "./ParkInfo.vue"
+import ParkInfo from "./ParkInfo.vue";
 export default {
     name: 'ParkInfoList',
     props: {
-        infoList: Array,
+        infoList: Map,
     },
     components: {
         ParkInfo,
     },
-        // emits: ['delete-task', 'toggle-reminder']
 }
 </script>

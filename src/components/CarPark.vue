@@ -1,5 +1,9 @@
 <template>
+    <header>
+        <h1>Carpark Availability</h1>
+    </header>
     <main>
+    <div style="overflow-x:auto;">
       <table class="styled-table">
       <thead>
           <tr>
@@ -11,60 +15,30 @@
           </tr>
       </thead>
       <tbody>
-          <tr>
-              <td>Small</td>
-              <td>{{carParks.small.h? carParks.small.h.availableLot: 0}}</td>
-              <td>{{carParks.small.l? carParks.small.l.availableLot: 0}}</td>
-          </tr>
-          <tr class="active-row">
-              <td>Medium</td>
-              <td>{{carParks.medium.h? carParks.medium.h.availableLot: 0}}</td>
-              <td>{{carParks.medium.l? carParks.medium.l.availableLot: 0}}</td>
-          </tr>
-          <tr class="active-row">
-              <td>Big</td>
-              <td>{{carParks.big.h? carParks.big.h.availableLot: 0}}</td>
-              <td>{{carParks.big.l? carParks.big.l.availableLot: 0}}</td>
-          </tr>
-          <tr class="active-row">
-              <td>Large</td>
-              <td>{{carParks.large.h? carParks.large.h.availableLot: 0}}</td>
-              <td>{{carParks.large.l? carParks.large.l.availableLot: 0}}</td>
-          </tr>
+            <tr v-for="[key, value] in carparkAvailability" class="active-row">
+                <td> {{key}} </td>
+                <td v-for="[k, v] in value">
+                    <ParkInfo :info="v"/>
+                </td>
+            </tr>
       </tbody>
-
-      {{carParks}}
   </table>
+</div>
     </main>
   </template>
 
 
 <script>
+import ParkInfo from './ParkInfo.vue';
 
 export default {
   name: 'CarPark',
   components: {
-  },
+    ParkInfo
+},
   data() {
     return {
-      carParks: {
-            small: {
-              h: null,
-              l: null,
-            },
-            medium: {
-              h: null,
-              l: null,
-            },
-            big: {
-              h: null,
-              l: null,
-            },
-            large: {
-              h: null,
-              l: null,
-            },
-          },
+        carparkAvailability : new Map(),
     }
   },
   methods: {
@@ -73,26 +47,6 @@ export default {
         .get('https://api.data.gov.sg/v1/transport/carpark-availability')
         .then((response) => {
           let responseData = response.data.items[0].carpark_data;
-
-          let structuredData = {
-            small: {
-              h: null,
-              l: null,
-            },
-            medium: {
-              h: null,
-              l: null,
-            },
-            big: {
-              h: null,
-              l: null,
-            },
-            large: {
-              h: null,
-              l: null,
-            },
-          }
-
           responseData.forEach((data) => {
             let lots = data.carpark_info;
 
@@ -110,52 +64,55 @@ export default {
                 let total = lot.total_lots;
                 let available = lot.lots_available;
 
+                let highKey = "highest";
+                let lowKey = "lowest";
+                let key = "";
+
                 if (available != 0) {
                     if (total < 100) {
-                        if (structuredData.small.h == null && structuredData.small.l == null) {
-                            structuredData.small.h = info;
-                            structuredData.small.l = info;
-                        } else if (structuredData.small.h.availableLot < available) {
-                            structuredData.small.h = info;
-                        } else if (structuredData.small.l.availableLot > available && available != 0)  {
-                            structuredData.small.l = info;
-                        }
+                        key = "small";
                     } else if (total < 200 && total >= 100) {
-                        if (structuredData.medium.h == null && structuredData.medium.l == null) {
-                            structuredData.medium.h = info;
-                            structuredData.medium.l = info;
-                        } else if (structuredData.medium.h.availableLot < available) {
-                            structuredData.medium.h = info;
-                        } else if (structuredData.medium.l.availableLot > available && available != 0) {
-                            structuredData.medium.l = info;
-                        }
+                        key = "medium";
                     }  else if (total < 300 && total >= 200) {
-                        if (structuredData.big.h == null && structuredData.big.l == null) {
-                            structuredData.big.h = info;
-                            structuredData.big.l = info;
-                        } else if (structuredData.big.h.availableLot < available) {
-                            structuredData.big.h = info;
-                        } else if (structuredData.big.l.availableLot > available && available != 0) {
-                            structuredData.big.l = info;
-                        }
+                        key = "big";
                     } else if (total >= 300) {
-                        if (structuredData.large.h == null && structuredData.large.l == null) {
-                            structuredData.large.h = info;
-                            structuredData.large.l = info;
-                        } else if (structuredData.large.h.availableLot < available) {
-                            structuredData.large.h = info;
-                        } else if (structuredData.large.l.availableLot > available && available != 0) {
-                            structuredData.large.l = info;
-                        }
+                        key = "large";
                     }
+
+                    let availableByCategory = this.carparkAvailability.get(key);
+                    let high = availableByCategory.get(highKey);
+                    let low = availableByCategory.get(lowKey);
+                    if (high.availableLot == 0 && low.availableLot == 0) {
+                        availableByCategory.set(lowKey, info);
+                        availableByCategory.set(highKey, info);
+                    } else if (high.availableLot < available) {
+                        availableByCategory.set(highKey, info);
+                    } else if (low.availableLot > available)  {
+                        availableByCategory.set(lowKey, info);
+                    }
+                    this.carparkAvailability.set(key, availableByCategory);
                 }
             });
         });
-        this.carParks = structuredData;
     });
     },
+    
 },
   async created() {
+    let lotInfo = {
+            availableLot: 0,
+            parkNumber: null,
+            lotType: null,
+        };
+
+    let categories = ["small", "medium", "big", "large"];
+    categories.forEach((category) => {
+        let logMap = new Map();
+        logMap.set("highest", lotInfo);
+        logMap.set("lowest", lotInfo);
+        this.carparkAvailability.set(category, logMap);
+    });
+
     await this.getList()
   }
 }
@@ -178,18 +135,24 @@ export default {
 }
 
 .styled-table {
+    padding: 4px;
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
+    font-size: 1.2em;
     font-family: sans-serif;
     min-width: 400px;
+    width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
+    text-align: center;
+}
+
+td {
+    text-align: center;
 }
 
 header {
