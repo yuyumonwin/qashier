@@ -1,5 +1,13 @@
 <template>
     {{info.availableLot}}
+
+    <div class="tooltip">
+    <i class="fa fa-info-circle "></i>
+    <span class="tooltip-text">
+        Park number - Lot
+        {{info.parkNumber}} - {{info.lotType}}
+    </span>
+</div>
 </template>
 
 <script>
@@ -12,21 +20,27 @@
 </script>
 
 <style scope>
-.fas {
-  color: red;
+.tooltip {
+  position: relative;
+  display: inline-block;
 }
-.task {
-  background: #f4f4f4;
-  margin: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 140px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  margin: 8px;
+  font-size: 0.8em;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
 }
-.task.reminder {
-  border-left: 5px solid green;
-}
-.task h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
 }
 </style>

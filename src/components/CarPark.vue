@@ -121,7 +121,6 @@ export default {
 
 
 <style scoped>
-
 .styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
 }
@@ -130,18 +129,13 @@ export default {
     background-color: #f3f3f3;
 }
 
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
 .styled-table {
-    padding: 4px;
+    width: 100%;
+    min-width: 400px;
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 1.2em;
     font-family: sans-serif;
-    min-width: 400px;
-    width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -153,32 +147,5 @@ export default {
 
 td {
     text-align: center;
-}
-
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 }
 </style>
