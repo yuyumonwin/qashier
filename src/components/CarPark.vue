@@ -99,7 +99,7 @@ export default {
         });
     },
   },
-  async created() {
+  created() {
     let lotInfo = {
       availableLot: 0,
       parkNumber: null,
@@ -113,8 +113,16 @@ export default {
       logMap.set("lowest", lotInfo);
       this.carparkAvailability.set(category, logMap);
     });
-
+  },
+  async mounted() {
+    // Initial polling.
     await this.getList();
+    var loadData = async () => {
+      await this.getList();
+      // Fetch the data every 10 seconds.
+      setTimeout(loadData, 10000);
+    };
+    setTimeout(loadData, 10000);
   },
 };
 </script>
