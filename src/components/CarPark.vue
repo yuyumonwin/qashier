@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h1>Carpark Availability</h1>
+        <h1>{{ $t("message.carpark_availability") }}</h1>
     </header>
     <main>
     <div style="overflow-x:auto;">
@@ -8,16 +8,17 @@
       <thead>
           <tr>
               <th>
-                Carpark Categories
+                {{ $t("message.categories") }}
               </th>
-              <th>Highest available lots</th>
-              <th>Lowest available lots</th>
+              <th>{{ $t("message.highest_availability_lots") }}</th>
+              <th>{{ $t("message.lowest_availability_lots") }}</th>
           </tr>
       </thead>
       <tbody>
             <tr v-for="[key, value] in carparkAvailability" class="active-row">
-                <td> {{key}} </td>
-                <td v-for="[k, v] in value">
+                <td> {{ $t("message."+key) }}
+                    </td>
+                <td v-for="[_, v] in value">
                     <ParkInfo :info="v"/>
                 </td>
             </tr>
