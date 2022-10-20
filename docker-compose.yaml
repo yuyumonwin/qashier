@@ -1,0 +1,19 @@
+version: "3.9"
+
+networks:
+  app: 
+    name: app
+
+services:
+  app: 
+    container_name: app
+    image: node:16
+    networks: 
+      - app
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    volumes:
+      - ./:/app/
+    working_dir: /app
+    entrypoint: ""
