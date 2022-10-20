@@ -15,6 +15,7 @@ export const i18n = createI18n({
         large: "Large",
         park_number: "Park Number",
         park_lot_type: "Lot Type",
+        error_message: "The data has not updated since ",
       },
     },
   },
