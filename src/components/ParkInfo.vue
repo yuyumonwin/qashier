@@ -1,22 +1,22 @@
 <template>
-    {{info.availableLot}}
+  {{ info.availableLot }}
 
-    <div class="tooltip">
-    <i class="fa fa-info-circle "></i>
+  <div class="tooltip">
+    <i class="fa fa-info-circle"></i>
     <span class="tooltip-text">
-        Park number - Lot
-        {{info.parkNumber}} - {{info.lotType}}
+      Park number - Lot
+      {{ info.parkNumber }} - {{ info.lotType }}
     </span>
-</div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'ParkInfo',
-        props: {
-            info: Object
-        },
-    }
+export default {
+  name: "ParkInfo",
+  props: {
+    info: Object,
+  },
+};
 </script>
 
 <style scope>

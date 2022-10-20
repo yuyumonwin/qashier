@@ -1,16 +1,16 @@
 <template>
   <div>
-    <CarPark/>
+    <CarPark />
   </div>
 </template>
 
 <script>
-import CarPark from './components/CarPark.vue';
+import CarPark from "./components/CarPark.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     CarPark,
   },
-}
+};
 </script>
