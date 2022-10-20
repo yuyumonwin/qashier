@@ -12,11 +12,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
       - name: Set up
         run: make install
       # - name: Run Tests
       #   run: make test
       - name: Build
         run: make build 
+      - name: Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_QASHIER_DEMO_70DC7 }}"
+          projectId: qashier-demo-70dc7
+          channelId: ${{ github.ref == 'refs/heads/main' && 'live' || '' }}
