@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading" class="loading"></div>
   <div v-show="!isLoading">
-    <CarPark :carparkAvailability="carparkAvailability" />
+    <CarParkAvailability :carparkAvailability="carparkAvailability" />
   </div>
   <div v-if="!isLoading" class="message">
     {{ $t("message.last_updated") }} {{ this.lastUpdated }}
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import CarPark from "./components/CarPark.vue";
+import CarParkAvailability from "./components/CarParkAvailability.vue";
 
 export default {
   name: "App",
   components: {
-    CarPark,
+    CarParkAvailability,
   },
   data() {
     return {
@@ -86,7 +86,7 @@ export default {
           });
         })
         .catch((err) => {
-          console.log(err.toString())
+          console.log(err.toString());
         });
     },
   },

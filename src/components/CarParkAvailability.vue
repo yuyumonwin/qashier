@@ -35,7 +35,7 @@
 import ParkInfo from "./ParkInfo.vue";
 
 export default {
-  name: "CarPark",
+  name: "CarParkAvailability",
   components: {
     ParkInfo,
   },
