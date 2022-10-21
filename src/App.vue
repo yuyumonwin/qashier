@@ -42,6 +42,7 @@ export default {
             };
             info.parkNumber = data.carpark_number;
 
+            // Each carpark can have more can one lot.
             lots.forEach((lot) => {
               info.lotType = lot.lot_type;
               info.availableLot = lot.lots_available;
@@ -97,6 +98,7 @@ export default {
       lotType: null,
     };
 
+    // Predefine return type.
     let categories = ["small", "medium", "big", "large"];
     categories.forEach((category) => {
       let logMap = new Map();
@@ -111,7 +113,7 @@ export default {
 
     var loadData = async () => {
       await this.getList();
-      // Fetch the data every 10 seconds.
+      // Fetches the data every 10 seconds.
       setTimeout(loadData, 10000);
     };
     setTimeout(loadData, 10000);
