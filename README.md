@@ -1,8 +1,7 @@
 # qashier
 
 Demo Vue.js app displaying carpark availability.
-This is hosted on firebase.
-https://qashier-demo-70dc7--pr3-setup-hosting-zd2ta4w3.web.app
+This is hosted on firebase, please find the latest deployment link in the last merged PR.
 
 ## Project Setup
 
