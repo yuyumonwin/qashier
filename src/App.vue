@@ -55,11 +55,11 @@ export default {
               if (available != 0) {
                 if (total < 100) {
                   key = "small";
-                } else if (total < 200 && total >= 100) {
+                } else if (total < 300 && total >= 100) {
                   key = "medium";
-                } else if (total < 300 && total >= 200) {
+                } else if (total < 400 && total >= 300) {
                   key = "big";
-                } else if (total >= 300) {
+                } else if (total >= 400) {
                   key = "large";
                 }
 
